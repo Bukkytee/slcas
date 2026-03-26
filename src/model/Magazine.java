@@ -18,16 +18,31 @@ public class Magazine extends LibraryItem {
 
     @Override
     public String getDetails() {
-        return "";
+        return "Magazine Details: " +
+                "ID=" + getId() +
+                ", Title='" + getTitle() + '\'' +
+                ", Author='" + getAuthor() + '\'' +
+                ", Year=" + getYear() +
+                ", Issue Number='" + issueNumber + '\'' +
+                ", Available=" + isAvailable();
     }
 
     @Override
     public Boolean borrowItem(UserAccount userAccount) {
-        return null;
+        if (this.isAvailable()) {
+            this.setAvailable(false);
+            userAccount.borrow(this);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public Boolean returnItem() {
-        return null;
+        if (!this.isAvailable()) {
+            this.setAvailable(true);
+            return true;
+        }
+        return false;
     }
 }

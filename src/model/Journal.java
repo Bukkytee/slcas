@@ -26,16 +26,32 @@ public class Journal extends LibraryItem {
 
     @Override
     public String getDetails() {
-        return "";
+        return "Journal Details: " +
+                "ID=" + getId() +
+                ", Title='" + getTitle() + '\'' +
+                ", Author='" + getAuthor() + '\'' +
+                ", Year=" + getYear() +
+                ", Volume='" + volume + '\'' +
+                ", Field of Study='" + fieldOfStudy + '\'' +
+                ", Available=" + isAvailable();
     }
 
     @Override
     public Boolean borrowItem(UserAccount userAccount) {
-        return null;
+        if (this.isAvailable()) {
+            this.setAvailable(false);
+            userAccount.borrow(this);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public Boolean returnItem() {
-        return null;
+        if (!this.isAvailable()) {
+            this.setAvailable(true);
+            return true;
+        }
+        return false;
     }
 }

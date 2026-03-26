@@ -27,16 +27,32 @@ public class Book extends LibraryItem {
 
     @Override
     public String getDetails() {
-        return "";
+        return "Book Details: " +
+                "ID=" + getId() +
+                ", Title='" + getTitle() + '\'' +
+                ", Author='" + getAuthor() + '\'' +
+                ", Year=" + getYear() +
+                ", ISBN='" + isbn + '\'' +
+                ", Genre='" + genre + '\'' +
+                ", Available=" + isAvailable();
     }
 
     @Override
     public Boolean borrowItem(UserAccount userAccount) {
-        return null;
+        if (this.isAvailable()) {
+           this.setAvailable(false);
+           userAccount.borrow(this);
+           return true;
+        }
+        return false;
     }
 
     @Override
     public Boolean returnItem() {
-        return null;
+        if (!this.isAvailable()) {
+            this.setAvailable(true);
+            return true;
+        }
+        return false;
     }
 }
