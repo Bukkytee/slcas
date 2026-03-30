@@ -1,5 +1,7 @@
 package model;
 
+import utils.IDGenerator;
+
 import java.util.*;
 
 // The central repository containing the ArrayList to store library items , the Queue for the reservation waitlist , the Stack for undoing the last admin operation , and the fixed-size Array to implement a quick cache for the most frequently accessed items.
@@ -19,6 +21,15 @@ public class LibraryDatabase {
     }
 
     public void addItem(LibraryItem item) {
+        String prefix = "ITEM";
+        if (item instanceof Book) {
+            prefix = "BK";
+        } else if (item instanceof Magazine) {
+            prefix = "MZ";
+        } else if (item instanceof Journal) {
+            prefix = "JN";
+        }
+        item.setId(IDGenerator.generateItemID(prefix));
         this.catalogue.add(item);
         adminHistory.push(new AdminAction(ActionType.ADD, item));
         System.out.println("Added LibraryItem: " + item.getTitle());

@@ -1,7 +1,9 @@
 package model;
 
+import java.io.Serializable;
+
 // The abstract base class for all resources.
-public abstract class LibraryItem implements Borrowable {
+public abstract class LibraryItem implements Borrowable, Serializable {
     private String id;
     private String title;
     private String author;
