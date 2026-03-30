@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 // The abstract base class for all resources.
 public abstract class LibraryItem implements Borrowable, Serializable {
@@ -9,6 +10,8 @@ public abstract class LibraryItem implements Borrowable, Serializable {
     private String author;
     private int year;
     private boolean isAvailable;
+    private int borrowCount = 0;
+    private LocalDate dueDate = null;
 
     public LibraryItem(String id, String title, String author, int year, boolean isAvailable) {
         this.id = id;
@@ -50,4 +53,20 @@ public abstract class LibraryItem implements Borrowable, Serializable {
     }
 
     public abstract String getDetails();
+
+    public int getBorrowCount() {
+        return borrowCount;
+    }
+
+    public void setBorrowCount(int borrowCount) {
+        this.borrowCount = borrowCount;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
 }
