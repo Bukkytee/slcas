@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.Queue;
 
 // The abstract base class for all resources.
 public abstract class LibraryItem implements Borrowable, Serializable {
@@ -12,6 +14,7 @@ public abstract class LibraryItem implements Borrowable, Serializable {
     private boolean isAvailable;
     private int borrowCount = 0;
     private LocalDate dueDate = null;
+    private Queue<UserAccount> waitlist = new LinkedList<>();
 
     public LibraryItem(String id, String title, String author, int year, boolean isAvailable) {
         this.id = id;
@@ -68,5 +71,17 @@ public abstract class LibraryItem implements Borrowable, Serializable {
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public void addToWaitlist(UserAccount user) {
+        waitlist.offer(user);
+    }
+
+    public UserAccount getNextInWaitlist() {
+        return waitlist.poll();
+    }
+
+    public int getWaitlistSize() {
+        return waitlist.size();
     }
 }

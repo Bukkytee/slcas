@@ -8,7 +8,6 @@ import java.util.*;
 // The central repository containing the ArrayList to store library items , the Queue for the reservation waitlist , the Stack for undoing the last admin operation , and the fixed-size Array to implement a quick cache for the most frequently accessed items.
 public class LibraryDatabase {
     private ArrayList<LibraryItem> catalogue;
-    private final Queue<LibraryItem> waitlist;
     private final Stack<AdminAction> adminHistory;
     private final LibraryItem[] accessCache;
     private final List<UserAccount> users = new ArrayList<>();
@@ -17,7 +16,6 @@ public class LibraryDatabase {
 
     public LibraryDatabase() {
         this.catalogue = new ArrayList<>();
-        this.waitlist = new LinkedList<>();
         this.adminHistory = new Stack<>();
         this.accessCache = new LibraryItem[CACHE_SIZE];
     }
@@ -67,9 +65,6 @@ public class LibraryDatabase {
     }
     public void setCatalogue(ArrayList<LibraryItem> catalogue) {
         this.catalogue = catalogue;
-    }
-    public Queue<LibraryItem> getWaitlist() {
-        return waitlist;
     }
     public Stack<AdminAction> getAdminHistory() {
         return adminHistory;
