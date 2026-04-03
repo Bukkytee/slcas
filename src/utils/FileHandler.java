@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 // Manages reading from and writing to local text or JSON files for data persistence
 public class FileHandler {
-    private static final String FILE_NAME = "library_catalogue.dat";
+    private static final String FILE_NAME = "library_catalogue.json";
 
     public static void saveCatalogue(ArrayList<LibraryItem> catalogue) {
         try (FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME);

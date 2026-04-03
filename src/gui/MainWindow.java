@@ -21,6 +21,9 @@ public class MainWindow extends JFrame {
     private CardLayout cardLayout;
     private JPanel mainContentPanel;
 
+    ViewItemsPanel viewItemsPanel;
+    AdminPanel adminPanel;
+
     public MainWindow() {
         database = new LibraryDatabase();
         libraryManager = new LibraryManager(database);
@@ -29,6 +32,9 @@ public class MainWindow extends JFrame {
         sortingEngine = new SortingEngine();
 
         libraryManager.loadSystemData();
+
+        viewItemsPanel = new ViewItemsPanel(database);
+        adminPanel = new AdminPanel(libraryManager);
 
         setTitle("Smart Library Circulation & Automation System");
         setSize(1200, 800);
@@ -62,15 +68,18 @@ public class MainWindow extends JFrame {
         cardLayout = new CardLayout();
         mainContentPanel = new JPanel(cardLayout);
 
-        mainContentPanel.add(createPlaceholder("View Items Space"), "VIEW_ITEMS");
-        mainContentPanel.add(createPlaceholder("Admin Space"), "ADMIN");
+        mainContentPanel.add(viewItemsPanel, "VIEW_ITEMS");
+        mainContentPanel.add(adminPanel, "ADMIN");
         mainContentPanel.add(createPlaceholder("Borrow & Return Space"), "BORROW_RETURN");
         mainContentPanel.add(createPlaceholder("Search & Sort Space"), "SEARCH_SORT");
 
         add(mainContentPanel, BorderLayout.CENTER);
 
-        viewItemsButton.addActionListener(e -> {cardLayout.show(mainContentPanel, "VIEW_ITEMS");});
-        adminButton.addActionListener(e -> {cardLayout.show(mainContentPanel, "ADMIN");});
+        viewItemsButton.addActionListener(e -> {
+            viewItemsPanel.refreshData();
+            cardLayout.show(mainContentPanel, "VIEW_ITEMS");
+        });
+        adminButton.addActionListener(e -> cardLayout.show(mainContentPanel, "ADMIN"));
         borrowReturnButton.addActionListener(e -> {cardLayout.show(mainContentPanel, "BORROW_RETURN");});
         searchSortButton.addActionListener(e -> {cardLayout.show(mainContentPanel, "SEARCH_SORT");});
 
